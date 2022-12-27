@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminAuthenticate;
+use App\Http\Controllers\AuthJWTController;
+use App\Http\Controllers\UserAuthenticate;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,16 +22,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::group([
+Route::group(['prefix' => 'user'],
+    function($router) {
 
-    'middleware' => 'api',
-    'prefix' => 'auth'
+        Route::post('register', [UserAuthenticate::class, 'register'])->name('userRegister');
+        Route::post('login', [UserAuthenticate::class, 'login'])->name('userLogin');
+        Route::post('logout', [UserAuthenticate::class, 'logout'])->name('userLogout');
+        Route::post('about-me', [UserAuthenticate::class, 'aboutMe'])->name('aboutMe');
+});
 
-], function ($router) {
+Route::group(['prefix' => 'admin'],
+    function ($router) {
 
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+        Route::post('register', [AdminAuthenticate::class,'adminRegister'])->name('adminRegister');
+        Route::post('login', [AdminAuthenticate::class,'adminLogin'])->name('adminLogin');
+        Route::post('logout', [AdminAuthenticate::class,'adminLogout'])->name('adminLogout');
+        Route::post('about-me', [AdminAuthenticate::class,'aboutMe'])->name('me');
 
 });
+
