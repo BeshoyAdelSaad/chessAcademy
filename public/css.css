@@ -1,0 +1,15 @@
+.adminDiv
+ {
+    padding: 10px;
+    margin: 5px;
+    background-color: bisque;
+    text-align: center;
+ }
+
+ .adminDiv a
+ {
+    color: blue;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 12px;
+ }

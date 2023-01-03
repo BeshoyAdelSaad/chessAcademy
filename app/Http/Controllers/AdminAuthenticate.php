@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller;
 
 class AdminAuthenticate extends Controller
 {
+
+
     public function adminRegister(Request $request)
     {
         $request->validate([
@@ -28,7 +30,6 @@ class AdminAuthenticate extends Controller
             //     'password' => $request->password
             // ]
         );
-
         return response()->json($addAdmin);
 
     }
@@ -39,8 +40,12 @@ class AdminAuthenticate extends Controller
         if (! $token = auth()->guard('admin-api')->attempt($credentials)) {
             return response()->json(['message' => 'Unauthorized', 'Error' => 401]);
         }
-        return $token;
 
+        return response()->json([
+            'Message' => 'Successfully you are login',
+            'Token' => $token
+        ]);
+        
     }
 
     public function aboutMe()

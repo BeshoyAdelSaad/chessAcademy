@@ -8,6 +8,8 @@ use Illuminate\Validation\Rule;
 
 class UserAuthenticate extends Controller
 {
+
+
     public function register(Request $request)
     {
         $request->validate([
@@ -27,7 +29,7 @@ class UserAuthenticate extends Controller
 
     }
 
-    public function login()
+    public function login(Request $request)
     {
         $chekUser = request(['email', 'password']);
 
@@ -37,8 +39,10 @@ class UserAuthenticate extends Controller
 
         return response()->json([
             'Message' => 'Successfully you are login',
-            'Token' => $token
+            'Token' => $token,
+            'url' => route('gameroom')
         ]);
+
     }
 
     public function logout()
@@ -53,9 +57,12 @@ class UserAuthenticate extends Controller
 
     public function aboutMe()
     {
-        return response()->json(auth()->guard('user-api')->user());
-
-
+        return response()->json(
+            [
+                'Your name is: ' => auth()->guard('user-api')->user()->name,
+                'Your email is: ' => auth()->guard('user-api')->user()->email
+            ]
+            );
     }
 
 }
